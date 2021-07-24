@@ -1,4 +1,5 @@
 import FirebaseAuth from "components/auth";
+import Link from "next/link";
 
 const Auth = () => {
   return (
@@ -6,7 +7,9 @@ const Auth = () => {
       <div>
         <FirebaseAuth />
         <p>
-          <a href="/">Go Home</a>
+          <Link href="/">
+            <a>Go Home</a>
+          </Link>
         </p>
       </div>
     </div>

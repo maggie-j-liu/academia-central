@@ -8,7 +8,9 @@ const Navbar = () => {
         "h-14 shadow-sm sticky w-full flex items-center justify-between"
       }
     >
-      <div>Name of Project</div>
+      <Link href="/">
+        <a>Name of Project</a>
+      </Link>
       <div className={"flex gap-8"}>
         <div>{user !== null && user.displayName}</div>
         <div>
