@@ -1,5 +1,5 @@
 import { db } from "utils/firebase/admin";
-export default handler = async (req, res) => {
+const handler = async (req, res) => {
   if (req.method !== "POST") {
     res.redirect(303, "/404");
     return;
@@ -28,3 +28,5 @@ export default handler = async (req, res) => {
   });
   res.status(200).send(newRef.key);
 };
+
+export default handler;
