@@ -13,7 +13,11 @@ const EventPage = ({ eventId, info }) => {
         {formatDate(new Date(info.startDate))} -{" "}
         {formatDate(new Date(info.endDate))}
       </p>
-      <img src={info.imageUrl} className={"w-full"} />
+      <img
+        src={info.imageUrl}
+        className={"w-full"}
+        alt={`${info.eventName} Image`}
+      />
       <div className={"text-xl text-gray-800 mt-6"}>
         <p>{info.description}</p>
       </div>
@@ -22,19 +26,8 @@ const EventPage = ({ eventId, info }) => {
 };
 
 export const getStaticPaths = async () => {
-  const events =
-    (await db
-      .ref("events")
-      .once("value")
-      .then((snapshot) => snapshot.val())) ?? {};
-  const ids = Object.keys(events);
-  const paths = ids.map((id) => ({
-    params: {
-      eventId: id,
-    },
-  }));
   return {
-    paths,
+    paths: [],
     fallback: true,
   };
 };
