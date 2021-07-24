@@ -1,6 +1,9 @@
 import NotSignedIn from "components/NotSignedIn";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import useUser from "utils/firebase/useUser";
+import initFirebase from "utils/firebase/setup";
+import firebase from "firebase/app";
+initFirebase();
 const AddEvent = () => {
   const defaults = {
     eventName: "",
@@ -11,8 +14,11 @@ const AddEvent = () => {
     websiteUrl: "",
   };
   const [formData, setFormData] = useState(defaults);
+  const [image, setImage] = useState("");
+  const [filename, setFilename] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useUser();
+  const imageRef = useRef();
   const changeData = (key, value) => {
     const prevData = formData;
     formData[key] = value;
@@ -27,16 +33,50 @@ const AddEvent = () => {
       setIsDisabled(true);
     }
   };
+  const handleImageChange = (event) => {
+    if (event.target.files?.[0]) {
+      setFilename(event.target.files[0].name);
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.addEventListener(
+        "load",
+        async (e) => {
+          setImage(e.target.result);
+        },
+        false
+      );
+    } else {
+      setFilename("");
+      setImage("");
+    }
+  };
   const submitData = async () => {
-    await fetch("/api/add-event", {
+    setIsDisabled(true);
+    const eventId = await fetch("/api/add-event", {
       method: "POST",
       body: JSON.stringify({
         ...formData,
         userId: user.uid,
       }),
+    }).then((res) => res.text());
+    const storageRef = firebase.storage().ref();
+    const eventImagesRef = storageRef.child(`eventImages/${eventId}`);
+    const snap = await eventImagesRef.putString(image, "data_url");
+    const url = await snap.ref.getDownloadURL();
+    await fetch("/api/add-image-url", {
+      method: "POST",
+      body: JSON.stringify({
+        userId: user.uid,
+        eventId,
+        imageUrl: url,
+      }),
     });
     setFormData(defaults);
+    setFilename("");
+    setImage("");
+    imageRef.current.value = "";
   };
+
   if (!user) {
     return (
       <>
@@ -117,6 +157,12 @@ const AddEvent = () => {
               onChange={(e) => changeData("websiteUrl", e.target.value)}
             />
           </label>
+          <input
+            type={"file"}
+            accept="image/jpeg, image/png"
+            onChange={handleImageChange}
+            ref={imageRef}
+          />
         </div>
         <button
           type="submit"
