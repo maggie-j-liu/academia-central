@@ -11,11 +11,19 @@ const Navbar = () => {
       <Link href="/">
         <a>Name of Project</a>
       </Link>
-      <div className={"flex gap-8"}>
+      <Link href="/events">
+        <a>Events</a>
+      </Link>
+      <div className={"flex gap-8 items-center"}>
         <div>{user !== null && user.displayName}</div>
         <div>
           {user !== null ? (
-            <button onClick={() => logout()}>Sign Out</button>
+            <button
+              onClick={() => logout()}
+              className={"rounded-md px-1 py-0.5"}
+            >
+              Sign Out
+            </button>
           ) : (
             <Link href="/sign-in">
               <a>Sign In</a>
