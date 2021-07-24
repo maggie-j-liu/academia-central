@@ -14,9 +14,8 @@ const Events = ({ events }) => {
         <h1 className={"text-4xl font-semibold text-center mb-6"}>Events</h1>
         <div className={"w-full grid grid-cols-3 gap-8 "}>
           {Object.entries(events).map(([key, value]) => (
-            <Link href={`/${key}`}>
+            <Link key={key} href={`/${key}`}>
               <a
-                key={key}
                 className={
                   "bg-white rounded-md py-6 px-4 hover:shadow-xl transition-shadow block"
                 }
@@ -24,6 +23,7 @@ const Events = ({ events }) => {
                 <img
                   src={value.imageUrl}
                   className={"rounded-md object-contain"}
+                  alt={`${value.eventName} Image`}
                 />
                 <div className={"mt-4"}>
                   <h2 className={"text-xl font-medium"}>{value.eventName}</h2>
@@ -43,10 +43,11 @@ const Events = ({ events }) => {
 };
 
 export async function getStaticProps() {
-  const events = await db
-    .ref("events")
-    .once("value")
-    .then((snapshot) => snapshot.val());
+  const events =
+    (await db
+      .ref("events")
+      .once("value")
+      .then((snapshot) => snapshot.val())) ?? {};
   const filteredEvents = {};
   for (const [key, { userId, ...rest }] of Object.entries(events)) {
     filteredEvents[key] = rest;
