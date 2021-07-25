@@ -64,7 +64,9 @@ const Home = ({ events }) => {
                         {formatDate(new Date(value.startDate))} -{" "}
                         {formatDate(new Date(value.endDate))}
                       </p>
-                      <p className={"text-gray-700"}>{value.description}</p>
+                      <p className={"text-gray-700 line-clamp-5"}>
+                        {value.description}
+                      </p>
                       {value.tags && (
                         <div>
                           <p className={"font-medium mb-2"}>Tags</p>
