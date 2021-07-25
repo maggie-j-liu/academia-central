@@ -36,6 +36,7 @@ const Profile = () => {
   return (
     <div className={"w-3/4 max-w-3xl mx-auto my-8"}>
       <div className={"flex flex-col"}>
+        <h1 className={"text-4xl text-center font-medium"}>Profile</h1>
         <div className={"space-y-8"}>
           <label className={"block"}>
             <p>Tags</p>
