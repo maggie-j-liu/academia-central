@@ -69,11 +69,12 @@ const AddEvent = () => {
   };
   const submitData = async () => {
     setIsDisabled(true);
+    const idToken = await firebase.auth().currentUser.getIdToken(true);
     const eventId = await fetch("/api/add-event", {
       method: "POST",
       body: JSON.stringify({
         ...formData,
-        userId: user.uid,
+        idToken,
       }),
     }).then((res) => res.text());
     const storageRef = firebase.storage().ref();
@@ -85,7 +86,7 @@ const AddEvent = () => {
     await fetch("/api/add-image-url", {
       method: "POST",
       body: JSON.stringify({
-        userId: user.uid,
+        idToken,
         eventId,
         imageUrl: url,
       }),

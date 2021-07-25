@@ -1,21 +1,23 @@
-import { db } from "utils/firebase/admin";
+import { db, auth } from "utils/firebase/admin";
 const handler = async (req, res) => {
   if (req.method !== "POST") {
     res.redirect(303, "/404");
     return;
   }
-  const { userId, eventId, imageUrl } = JSON.parse(req.body);
-  if (!userId || !eventId || !imageUrl) {
-    res.status(400).send("Missing userId, eventId or imageUrl");
+  const { idToken, eventId, imageUrl } = JSON.parse(req.body);
+  if (!idToken || !eventId || !imageUrl) {
+    res.status(400).send("Missing idToken, eventId or imageUrl");
     return;
   }
+  const decodedToken = await auth.verifyIdToken(idToken).catch((error) => {
+    res.status(400).send("error verifying token");
+  });
+  const userId = decodedToken.uid;
   const eventRef = db.ref(`events/${eventId}`);
   const currentData = await eventRef
     .once("value")
     .then((snapshot) => snapshot.val());
   if (currentData.userId !== userId) {
-    console.log(currentData.userId);
-    console.log(userId);
     res.status(400).send("wrong user");
     return;
   }
