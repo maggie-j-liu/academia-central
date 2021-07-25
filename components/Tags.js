@@ -6,6 +6,7 @@ const Tags = ({ tags, removeable, onRemove }) => {
           className={
             "bg-primary-100 hover:bg-primary-200 focus:bg-primary-200 px-3 py-0.5 flex items-center rounded-full"
           }
+          key={idx}
         >
           <span>{tag}</span>
           {removeable && (
