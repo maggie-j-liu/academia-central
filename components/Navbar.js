@@ -9,7 +9,9 @@ const Navbar = () => {
       }
     >
       <Link href="/">
-        <a className={"text-primary-800 font-bold"}>Academia Central</a>
+        <a className={"text-primary-800 font-bold"}>
+          <img src={"/Logo.png"} className={"h-14 py-1"} />
+        </a>
       </Link>
 
       <Link href="/events">
