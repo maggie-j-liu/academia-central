@@ -20,6 +20,7 @@ const handler = async (req, res) => {
   const newRef = await db.ref("events").push({
     eventName: body.eventName,
     description: body.description,
+    tags: body.tags,
     startDate: body.startDate,
     endDate: body.endDate,
     location: body.location,
