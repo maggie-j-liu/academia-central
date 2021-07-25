@@ -1,6 +1,7 @@
 import { db } from "utils/firebase/admin";
 import Link from "next/link";
 import formatDate from "utils/formatDate";
+import Tags from "components/Tags";
 
 const Events = ({ events }) => {
   return (
@@ -12,7 +13,7 @@ const Events = ({ events }) => {
             <Link key={key} href={`/events/${key}`}>
               <a
                 className={
-                  "bg-white rounded-md py-6 px-4 hover:shadow-xl transition-shadow block"
+                  "bg-white rounded-md py-6 px-4 hover:shadow-xl transition-shadow block space-y-4"
                 }
               >
                 <img
@@ -20,14 +21,22 @@ const Events = ({ events }) => {
                   className={"rounded-md object-contain"}
                   alt={`${value.eventName} Image`}
                 />
-                <div className={"mt-4"}>
-                  <h2 className={"text-xl font-medium"}>{value.eventName}</h2>
+                <div>
+                  <h2 className={"text-xl font-semibold"}>{value.eventName}</h2>
                   <p>
                     {formatDate(new Date(value.startDate))} -{" "}
                     {formatDate(new Date(value.endDate))}
                   </p>
-                  <p className={"text-gray-700"}>{value.description}</p>
+                  <p className={"text-gray-700 line-clamp-5"}>
+                    {value.description}
+                  </p>
                 </div>
+                {value.tags && (
+                  <div>
+                    <p className={"font-medium mb-2"}>Tags</p>
+                    <Tags tags={value.tags} />
+                  </div>
+                )}
               </a>
             </Link>
           ))}
