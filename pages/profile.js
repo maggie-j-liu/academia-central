@@ -3,8 +3,7 @@ import initFirebase from "utils/firebase/setup";
 
 initFirebase();
 
-
-const profile = () => {
+const Profile = () => {
   const defaults = {
     tags: [],
   };
@@ -27,7 +26,6 @@ const profile = () => {
     }
   };
 
-  
   const handleKeyDown = (e) => {
     if (e.key == "Enter") {
       e.preventDefault();
@@ -51,8 +49,8 @@ const profile = () => {
             />
           </label>
           <div className={"flex flex-wrap gap-2"}>
-            {formData.tags.map((tag) => (
-              <div className={"bg-gray-100 px-2 py-0.5"}>
+            {formData.tags.map((tag, idx) => (
+              <div key={idx} className={"bg-gray-100 px-2 py-0.5"}>
                 <span>{tag}</span>
               </div>
             ))}
@@ -60,7 +58,7 @@ const profile = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
-  
-export default profile;
+
+export default Profile;
