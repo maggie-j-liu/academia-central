@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import initFirebase from "utils/firebase/setup";
 
@@ -10,8 +9,23 @@ const profile = () => {
     tags: [],
   };
   const [formData, setFormData] = useState(defaults);
-
+  const [image, setImage] = useState("");
   const [currentTag, setCurrentTag] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+  const changeData = (key, value) => {
+    const prevData = formData;
+    formData[key] = value;
+    setFormData({ ...prevData });
+    if (
+      ["eventName", "description", "startDate", "endDate", "location"].every(
+        (val) => formData[val] !== ""
+      )
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
 
   
   const handleKeyDown = (e) => {
