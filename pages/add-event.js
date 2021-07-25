@@ -3,6 +3,58 @@ import { useState, useRef } from "react";
 import useUser from "utils/firebase/useUser";
 import initFirebase from "utils/firebase/setup";
 import firebase from "firebase/app";
+
+const authToken = process.env.AUTH_TOKEN;
+
+const payload ({message_content})= {
+  // <Optional,double| Minimum required confidence for the insight to be recognized. Value ranges between 0.0 to 1.0. Default value is 0.5.>
+  "confidenceThreshold": 0.6,
+
+  "messages": [
+    {
+
+      "payload": {
+        "content": message_content,
+        "contentType": "text/plain"
+      },
+
+      }
+    }
+  ]
+}
+
+const responses = {
+  400: 'Bad Request! Please refer docs for correct input fields.',
+  401: 'Unauthorized. Please generate a new access token.',
+  404: 'The conversation and/or it\'s metadata you asked could not be found, please check the input provided',
+  429: 'Maximum number of concurrent jobs reached. Please wait for some requests to complete.',
+  500: 'Something went wrong! Please contact support@symbl.ai'
+}
+
+const fetchData = {
+  method: "POST",
+  headers: {
+    'Authorization': `Bearer ${authToken}`,
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(payload),
+}
+
+fetch(`https://api.symbl.ai/v1/process/text`, fetchData).then(response => {
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error(responses[response.status]);
+  }
+}).then(response => {
+  console.log('response', response);
+}).catch(error => {
+  console.error(error);
+});
+
+
+
+
 initFirebase();
 const AddEvent = () => {
   const defaults = {
