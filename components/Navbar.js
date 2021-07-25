@@ -11,11 +11,21 @@ const Navbar = () => {
       <Link href="/">
         <a>Name of Project</a>
       </Link>
+
       <Link href="/events">
         <a>Events</a>
       </Link>
+
       <div className={"flex gap-8 items-center"}>
-        <div>{user !== null && user.displayName}</div>
+
+        <button type="button" onClick={(e) => {
+            e.preventDefault();
+            window.location.href='/profile';
+        }}>{user !== null && user.displayName}</button>
+
+      </div>  
+
+      <div className={"flex gap-8 items-center"}>
         <div>
           {user !== null ? (
             <button
@@ -25,9 +35,11 @@ const Navbar = () => {
               Sign Out
             </button>
           ) : (
+
             <Link href="/sign-in">
               <a>Sign In</a>
             </Link>
+
           )}
         </div>
       </div>
