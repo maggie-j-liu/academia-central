@@ -35,6 +35,7 @@ const Events = ({ events }) => {
   };
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && currentTag.length > 0) {
+      e.preventDefault();
       const newSearchTags = [...searchTags, currentTag];
       setSearchTags(newSearchTags);
       setCurrentTag("");

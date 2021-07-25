@@ -1,6 +1,7 @@
 import { db } from "utils/firebase/admin";
 import { useRouter } from "next/router";
 import formatDate from "utils/formatDate";
+import Tags from "components/Tags";
 const EventPage = ({ eventId, info }) => {
   const router = useRouter();
   if (router.isFallback) {
@@ -18,6 +19,9 @@ const EventPage = ({ eventId, info }) => {
         className={"w-full"}
         alt={`${info.eventName} Image`}
       />
+      <div className={"text-lg font-medium underline"}>Tags</div>
+      {info.tags?.length > 0 && <Tags tags={info.tags} />}
+
       <div className={"text-xl text-gray-800 mt-6"}>
         <p>{info.description}</p>
       </div>
