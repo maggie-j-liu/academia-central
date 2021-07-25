@@ -7,35 +7,29 @@ import Tags from "components/Tags";
 
 const images = [
   {
-    url: "https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171__340.jpg",
+    url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
   },
   {
-    url: "https://cdn.pixabay.com/photo/2013/07/18/10/56/railroad-163518__480.jpg",
+    url: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1054&q=80",
   },
   {
-    url: "https://analyticsindiamag.com/wp-content/uploads/2020/10/7d744a684fe03ebc7e8de545f97739dd.jpg",
-  },
-  { url: "https://i.ytimg.com/vi/p7TDpx0hsn4/maxresdefault.jpg" },
-  {
-    url: "https://www.planetware.com/wpimages/2020/01/india-in-pictures-beautiful-places-to-photograph-taj-mahal.jpg",
+    url: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
   },
   {
-    url: "http://www.lovethispic.com/uploaded_images/136562-Beautiful-Butterfly.jpg",
-  },
-  {
-    url: "https://www.pixelstalk.net/wp-content/uploads/2016/08/Free-Best-nd-Beautiful-Images.jpg",
+    url: "https://images.unsplash.com/photo-1598981457915-aea220950616?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1070&q=80",
   },
 ];
 
 const Home = ({ events }) => {
   return (
-    <nav>
+    <div>
       <div className="w-3/4 max-w-3xl mx-auto my-8 text-center">
-        <div>Our hacktable project :)</div>
+        <h1 className={"text-5xl font-bold mb-2"}>Academia Central</h1>
+        <p className={"mb-2"}>The hub of world-changing inspiration.</p>
         <div>
           <SimpleImageSlider
-            width={896}
-            height={504}
+            width={750}
+            height={450}
             slideDuration={0.05}
             images={images}
             showNavs={true}
@@ -97,7 +91,7 @@ const Home = ({ events }) => {
           </div>
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 

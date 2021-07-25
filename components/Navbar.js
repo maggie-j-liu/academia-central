@@ -5,26 +5,26 @@ const Navbar = () => {
   return (
     <nav
       className={
-        "h-14 shadow-sm sticky w-full flex items-center justify-between"
+        "h-14 shadow-sm sticky w-full flex items-center justify-between px-16"
       }
     >
       <Link href="/">
-        <a>Name of Project</a>
+        <a className={"text-primary-800 font-bold"}>Academia Central</a>
       </Link>
 
       <Link href="/events">
         <a>Events</a>
       </Link>
-
-      <div className={"flex gap-8 items-center"}>
-
-        <button type="button" onClick={(e) => {
-            e.preventDefault();
-            window.location.href='/profile';
-        }}>{user !== null && user.displayName}</button>
-
-      </div>  
-
+      <Link href="/add-event">
+        <a>Add an event</a>
+      </Link>
+      {user !== null && (
+        <div className={"flex gap-8 items-center"}>
+          <Link href="/profile">
+            <a>{user.displayName}</a>
+          </Link>
+        </div>
+      )}
       <div className={"flex gap-8 items-center"}>
         <div>
           {user !== null ? (
@@ -35,11 +35,9 @@ const Navbar = () => {
               Sign Out
             </button>
           ) : (
-
             <Link href="/sign-in">
               <a>Sign In</a>
             </Link>
-
           )}
         </div>
       </div>
