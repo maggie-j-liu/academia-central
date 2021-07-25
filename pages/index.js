@@ -25,7 +25,7 @@ const Home = ({ events }) => {
     <div>
       <div className="w-3/4 max-w-3xl mx-auto my-8 text-center">
         <h1 className={"text-5xl font-bold mb-2"}>Academia Central</h1>
-        <p className={"mb-2"}>The hub of world-changing inspiration.</p>
+        <p className={"mb-2"}>The hub for world-changing inspiration.</p>
         <div>
           <SimpleImageSlider
             width={750}
