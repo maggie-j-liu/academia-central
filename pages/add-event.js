@@ -13,10 +13,12 @@ const AddEvent = () => {
     endDate: "",
     location: "",
     websiteUrl: "",
+    tags: [],
   };
   const [formData, setFormData] = useState(defaults);
   const [image, setImage] = useState("");
   const [filename, setFilename] = useState("");
+  const [currentTag, setCurrentTag] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const { user } = useUser();
   const imageRef = useRef();
@@ -51,6 +53,13 @@ const AddEvent = () => {
       setImage("");
     }
   };
+  const handleKeyDown = (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+      changeData("tags", [...formData.tags, e.target.value]);
+      setCurrentTag("");
+    }
+  };
   const submitData = async () => {
     setIsDisabled(true);
     const eventId = await fetch("/api/add-event", {
@@ -61,7 +70,9 @@ const AddEvent = () => {
       }),
     }).then((res) => res.text());
     const storageRef = firebase.storage().ref();
-    const eventImagesRef = storageRef.child(`eventImages/${eventId}`);
+    const eventImagesRef = storageRef.child(
+      `eventImages/${eventId}/${filename}`
+    );
     const snap = await eventImagesRef.putString(image, "data_url");
     const url = await snap.ref.getDownloadURL();
     await fetch("/api/add-image-url", {
@@ -114,6 +125,25 @@ const AddEvent = () => {
               placeholder={"A description of your event"}
             />
           </label>
+          <label className={"block"}>
+            <p>Tags</p>
+            <input
+              type={"text"}
+              placeholder={"Add tags that describe your event"}
+              className={"form-input input-box w-full"}
+              value={currentTag}
+              onChange={(e) => setCurrentTag(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+          </label>
+
+          <div className={"flex flex-wrap gap-2"}>
+            {formData.tags.map((tag) => (
+              <div className={"bg-gray-100 px-2 py-0.5"}>
+                <span>{tag}</span>
+              </div>
+            ))}
+          </div>
           <div className={"flex justify-between"}>
             <label className={"block"}>
               <p>
