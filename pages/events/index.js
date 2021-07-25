@@ -7,6 +7,7 @@ import { useState } from "react";
 const Events = ({ events }) => {
   const [searchTags, setSearchTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
+
   const sortedEventsKeys = Object.keys(events).sort((a, b) => {
     const firstStartDate = Date.parse(events[a].startDate);
     const secondStartDate = Date.parse(events[b].startDate);
@@ -27,7 +28,7 @@ const Events = ({ events }) => {
     setEventsToShow(
       sortedEventsKeys.filter((key) => {
         const intersection = tags.filter((val) =>
-          events[key].tags?.includes(val)
+          events[key].tags?.toString().toLowerCase().includes(val.toString().toLowerCase())
         );
         return intersection.length > 0;
       })
