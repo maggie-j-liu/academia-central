@@ -3,6 +3,7 @@ import SimpleImageSlider from "react-simple-image-slider";
 import Link from "next/link";
 import formatDate from "utils/formatDate";
 import { db } from "utils/firebase/admin";
+import Tags from "components/Tags";
 
 const images = [
   {
@@ -28,7 +29,6 @@ const images = [
 
 const Home = ({ events }) => {
   return (
-
     <nav>
       <div className="w-3/4 max-w-3xl mx-auto my-8 text-center">
         <div>Our hacktable project :)</div>
@@ -44,56 +44,62 @@ const Home = ({ events }) => {
         </div>
       </div>
 
-
       <div className={"w-full min-h-screen bg-gray-100 py-8"}>
         <div className={"w-4/5 max-w-7xl mx-auto"}>
           <h1 className={"text-4xl font-semibold text-center mb-6"}>Events</h1>
           <div className={"w-full grid grid-cols-3 gap-8 "}>
-            {Object.entries(events).slice(0,3).map(([key, value]) => (
-              <Link key={key} href={`/events/${key}`}>
-                <a
-                  className={
-                    "bg-white rounded-md py-6 px-4 hover:shadow-xl transition-shadow block"
-                  }
-                >
-                  <img
-                    src={value.imageUrl}
-                    className={"rounded-md object-contain"}
-                    alt={`${value.eventName} Image`}
-                  />
-                  <div className={"mt-4"}>
-                    <h2 className={"text-xl font-medium"}>{value.eventName}</h2>
-                    <p>
-                      {formatDate(new Date(value.startDate))} -{" "}
-                      {formatDate(new Date(value.endDate))}
-                    </p>
-                    <p className={"text-gray-700"}>{value.description}</p>
-                  </div>
-                </a>
-              </Link>
-            ))}
+            {Object.entries(events)
+              .slice(0, 3)
+              .map(([key, value]) => (
+                <Link key={key} href={`/events/${key}`}>
+                  <a
+                    className={
+                      "bg-white rounded-md py-6 px-4 hover:shadow-xl transition-shadow block"
+                    }
+                  >
+                    <img
+                      src={value.imageUrl}
+                      className={"rounded-md object-contain"}
+                      alt={`${value.eventName} Image`}
+                    />
+                    <div className={"mt-4"}>
+                      <h2 className={"text-xl font-medium"}>
+                        {value.eventName}
+                      </h2>
+                      <p>
+                        {formatDate(new Date(value.startDate))} -{" "}
+                        {formatDate(new Date(value.endDate))}
+                      </p>
+                      <p className={"text-gray-700"}>{value.description}</p>
+                      {value.tags && (
+                        <div>
+                          <p className={"font-medium mb-2"}>Tags</p>
+                          <Tags tags={value.tags} />
+                        </div>
+                      )}
+                    </div>
+                  </a>
+                </Link>
+              ))}
           </div>
         </div>
         <div className="w-3/4 max-w-3xl mx-auto my-8">
           <div className={"text-xl font-semibold text-center mb-6"}>
             <Link href={"/events"}>
               <a
-                  className={
-                    "bg-white rounded-md py-6 px-4 hover:shadow-xl transition-shadow block"
-                  }
-                >
-              Explore more events
+                className={
+                  "bg-white rounded-md py-6 px-4 hover:shadow-xl transition-shadow block"
+                }
+              >
+                Explore more events
               </a>
             </Link>
           </div>
         </div>
       </div>
-
     </nav>
   );
 };
-
-
 
 export async function getStaticProps() {
   const events =
@@ -112,8 +118,5 @@ export async function getStaticProps() {
     revalidate: 10,
   };
 }
-
-
-
 
 export default Home;
